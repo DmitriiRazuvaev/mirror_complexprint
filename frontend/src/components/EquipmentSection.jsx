@@ -95,7 +95,7 @@ const EquipmentSection = () => {
             >
               <CardContent className="p-0">
                 <div className="relative overflow-hidden">
-                  <img 
+                  <img loading="lazy" decoding="async" 
                     src={equipment.url}
                     alt={equipment.alt}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"

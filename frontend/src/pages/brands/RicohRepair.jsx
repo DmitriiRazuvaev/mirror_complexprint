@@ -66,7 +66,7 @@ export default function RicohRepair() {
 
           {/* Hero Image */}
           <header className="mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img 
+            <img loading="lazy" decoding="async" 
               src="/images/Ricoh_master.jpg"
               alt="Мастер ComplexPrint ремонтирует принтер Ricoh Aficio с оригинальными запчастями"
               className="w-full h-[400px] object-cover"

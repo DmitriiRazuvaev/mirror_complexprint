@@ -130,7 +130,7 @@ const TestimonialsSection = () => {
               <div className="relative">
                 {/* Image Preview */}
                 <div className="h-64 overflow-hidden bg-gray-100">
-                  <img 
+                  <img loading="lazy" decoding="async" 
                     src={testimonial.image} 
                     alt={`Отзыв от ${testimonial.company}`}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
@@ -253,7 +253,7 @@ const TestimonialsSection = () => {
 
               {/* Image */}
               <div className="flex items-center justify-center p-4 pt-20 pb-16 max-h-[95vh] overflow-auto">
-                <img 
+                <img loading="lazy" decoding="async" 
                   src={selectedImage.image} 
                   alt={`Отзыв от ${selectedImage.company}`}
                   className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"

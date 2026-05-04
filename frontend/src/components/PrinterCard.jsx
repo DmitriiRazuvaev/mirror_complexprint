@@ -3,15 +3,16 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { getPrinterImage } from '../data/printers';
+import logger from '../lib/logger';
 
 const PrinterCard = ({ printer }) => {
   const [imageError, setImageError] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const printerImage = getPrinterImage(printer);
-  
-  // Логирование для отладки
+
+  // Логирование только в dev
   React.useEffect(() => {
-    console.log(`Printer: ${printer.model}, Image URL: ${printerImage}`);
+    logger.log(`Printer: ${printer.model}, Image URL: ${printerImage}`);
   }, [printer.model, printerImage]);
 
   const handleBuyClick = () => {
@@ -48,16 +49,18 @@ ${printer.colorSpeed ? `- Скорость цветной печати: ${printe
           title="Нажмите для просмотра в полном размере"
         >
           {!imageError ? (
-            <img 
+            <img
               src={printerImage}
               alt={printer.model}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               onError={(e) => {
-                console.error(`Failed to load image for ${printer.model}:`, printerImage, e);
+                logger.errorSafe(`Failed to load image for ${printer.model}`, e);
                 setImageError(true);
               }}
               onLoad={() => {
-                console.log(`Successfully loaded image for ${printer.model}`);
+                logger.log(`Successfully loaded image for ${printer.model}`);
               }}
             />
           ) : (

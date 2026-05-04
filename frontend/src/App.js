@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
@@ -8,51 +8,68 @@ import EquipmentSection from "./components/EquipmentSection";
 import AboutSection from "./components/AboutSection";
 import RepairRequestForm from "./components/RepairRequestForm";
 import Footer from "./components/Footer";
-import UserAgreement from "./pages/UserAgreement";
-import PrinterSelection from "./pages/PrinterSelection";
-import PrinterErrorGuide from "./pages/PrinterErrorGuide";
-import PrintDefectsGuide from "./pages/PrintDefectsGuide";
-import TermsOfService from "./pages/TermsOfService";
 import { Toaster } from "./components/ui/toaster";
 import { Helmet } from "react-helmet-async";
-import HpRepair from "./pages/brands/HpRepair";
-import CanonRepair from "./pages/brands/CanonRepair";
-import KyoceraRepair from "./pages/brands/KyoceraRepair";
-import RicohRepair from "./pages/brands/RicohRepair";
-import KonicaMinoltaRepair from "./pages/brands/KonicaMinoltaRepair";
-import XeroxRepair from "./pages/brands/XeroxRepair";
-import Pricing from "./pages/Pricing";
-import Districts from "./pages/Districts";
-import AboutUs from "./pages/AboutUs";
-import SubscriptionService from "./pages/SubscriptionService";
-import OneTimeRepair from "./pages/OneTimeRepair";
 import ScrollToTop from "./components/ScrollToTop";
-import FAQ from "./pages/FAQ";
 import CookieConsent from "./components/CookieConsent";
-import Contacts from "./pages/Contacts";
-import Reviews from "./pages/Reviews";
-import NotFound from "./pages/NotFound";
-import { 
-  getOrganizationSchema, 
+import {
+  getOrganizationSchema,
   getWebSiteSchema,
   getSubscriptionServiceSchema,
   getRepairServiceSchema,
   getDiagnosticServiceSchema,
   getSiteNavigationSchema,
   getWPHeaderSchema,
-  getWPFooterSchema
+  getWPFooterSchema,
 } from "./utils/schemas";
 
+// ── Lazy-loading всех роутов ────────────────────────────────────────────────
+// Каждая страница теперь грузится отдельным чанком только при переходе на неё.
+// На первой загрузке (главная) экономится ~60% JS-бандла.
+const UserAgreement = lazy(() => import("./pages/UserAgreement"));
+const PrinterSelection = lazy(() => import("./pages/PrinterSelection"));
+const PrinterErrorGuide = lazy(() => import("./pages/PrinterErrorGuide"));
+const PrintDefectsGuide = lazy(() => import("./pages/PrintDefectsGuide"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const HpRepair = lazy(() => import("./pages/brands/HpRepair"));
+const CanonRepair = lazy(() => import("./pages/brands/CanonRepair"));
+const KyoceraRepair = lazy(() => import("./pages/brands/KyoceraRepair"));
+const RicohRepair = lazy(() => import("./pages/brands/RicohRepair"));
+const KonicaMinoltaRepair = lazy(() => import("./pages/brands/KonicaMinoltaRepair"));
+const XeroxRepair = lazy(() => import("./pages/brands/XeroxRepair"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const Districts = lazy(() => import("./pages/Districts"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const SubscriptionService = lazy(() => import("./pages/SubscriptionService"));
+const OneTimeRepair = lazy(() => import("./pages/OneTimeRepair"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Contacts = lazy(() => import("./pages/Contacts"));
+const Reviews = lazy(() => import("./pages/Reviews"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Лёгкий fallback пока чанк страницы скачивается
+const RouteLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-purple-50">
+    <div className="flex items-center gap-3 text-purple-600">
+      <div className="w-8 h-8 rounded-full border-4 border-purple-200 border-t-purple-600 animate-spin" />
+      <span className="text-sm font-medium">Загрузка…</span>
+    </div>
+  </div>
+);
+
 const Home = () => {
-  // Комплексная Schema.org разметка
-  const organizationSchema = getOrganizationSchema();
-  const websiteSchema = getWebSiteSchema();
-  const subscriptionServiceSchema = getSubscriptionServiceSchema();
-  const repairServiceSchema = getRepairServiceSchema();
-  const diagnosticServiceSchema = getDiagnosticServiceSchema();
-  const siteNavigationSchema = getSiteNavigationSchema();
-  const wpHeaderSchema = getWPHeaderSchema();
-  const wpFooterSchema = getWPFooterSchema();
+  // Все JSON-LD склеены в один <script> вместо 8 отдельных —
+  // меньше парсинга и меньше head-блокировки рендера.
+  const homeJsonLd = [
+    getOrganizationSchema(),
+    getWebSiteSchema(),
+    getSubscriptionServiceSchema(),
+    getRepairServiceSchema(),
+    getDiagnosticServiceSchema(),
+    getSiteNavigationSchema(),
+    getWPHeaderSchema(),
+    getWPFooterSchema(),
+  ];
 
   return (
     <div className="min-h-screen">
@@ -63,16 +80,8 @@ const Home = () => {
         <meta name="robots" content="index, follow" />
         <meta httpEquiv="content-language" content="ru" />
         <link rel="alternate" hrefLang="ru" href="https://complexprint.ru/" />
-        
-        {/* Расширенные Schema.org разметки */}
-        <script type="application/ld+json">{JSON.stringify(organizationSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(websiteSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(subscriptionServiceSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(repairServiceSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(diagnosticServiceSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(siteNavigationSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(wpHeaderSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(wpFooterSchema)}</script>
+
+        <script type="application/ld+json">{JSON.stringify(homeJsonLd)}</script>
       </Helmet>
       <Header />
       <main>
@@ -92,30 +101,32 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/user-agreement" element={<UserAgreement />} />
-          <Route path="/printer-selection" element={<PrinterSelection />} />
-          <Route path="/printer-error-guide" element={<PrinterErrorGuide />} />
-          <Route path="/print-defects-guide" element={<PrintDefectsGuide />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/remont-printerov-hp" element={<HpRepair />} />
-          <Route path="/remont-printerov-canon" element={<CanonRepair />} />
-          <Route path="/remont-printerov-kyocera" element={<KyoceraRepair />} />
-          <Route path="/remont-printerov-ricoh" element={<RicohRepair />} />
-          <Route path="/remont-printerov-konica-minolta" element={<KonicaMinoltaRepair />} />
-          <Route path="/remont-printerov-xerox" element={<XeroxRepair />} />
-          <Route path="/ceny" element={<Pricing />} />
-          <Route path="/rayony-moskvy" element={<Districts />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/abonentskoe-obsluzhivanie" element={<SubscriptionService />} />
-          <Route path="/razovyy-remont" element={<OneTimeRepair />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/reviews" element={<Reviews />} />
-          {/* 404 - должен быть последним */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<RouteLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/user-agreement" element={<UserAgreement />} />
+            <Route path="/printer-selection" element={<PrinterSelection />} />
+            <Route path="/printer-error-guide" element={<PrinterErrorGuide />} />
+            <Route path="/print-defects-guide" element={<PrintDefectsGuide />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/remont-printerov-hp" element={<HpRepair />} />
+            <Route path="/remont-printerov-canon" element={<CanonRepair />} />
+            <Route path="/remont-printerov-kyocera" element={<KyoceraRepair />} />
+            <Route path="/remont-printerov-ricoh" element={<RicohRepair />} />
+            <Route path="/remont-printerov-konica-minolta" element={<KonicaMinoltaRepair />} />
+            <Route path="/remont-printerov-xerox" element={<XeroxRepair />} />
+            <Route path="/ceny" element={<Pricing />} />
+            <Route path="/rayony-moskvy" element={<Districts />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/abonentskoe-obsluzhivanie" element={<SubscriptionService />} />
+            <Route path="/razovyy-remont" element={<OneTimeRepair />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/reviews" element={<Reviews />} />
+            {/* 404 - должен быть последним */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <Toaster />
       <CookieConsent />

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Badge } from './ui/badge';
 import { commonIssues, repairFormBrands } from '../data/mock';
 import emailService from '../services/emailService';
+import logger from '../lib/logger';
 import UserAgreementModal from './UserAgreementModal';
 
 const RepairRequestForm = () => {
@@ -86,7 +87,8 @@ const RepairRequestForm = () => {
       return false;
     }
 
-    console.log('✅ Валидация формы прошла успешно:', formData);
+    // Валидация прошла. PII не логируем.
+    logger.log('✅ Валидация формы прошла успешно');
     return true;
   };
 
@@ -94,30 +96,30 @@ const RepairRequestForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-    
-    console.log('📝 Попытка отправки формы с данными:', formData);
-    
+
+    logger.log('📝 Попытка отправки формы (PII скрыты в проде)');
+
     if (!validateForm()) {
       setIsSubmitting(false);
       return;
     }
-    
+
     try {
-      console.log('📤 Отправка заявки на ремонт...');
+      logger.log('📤 Отправка заявки на ремонт...');
       const response = await emailService.sendRepairRequest(formData);
-      
-      console.log('📨 Ответ от сервиса:', response);
-      
+
+      logger.log('📨 Ответ от сервиса: success=', response?.success);
+
       if (response.success) {
-        console.log('✅ Заявка успешно отправлена');
+        logger.log('✅ Заявка успешно отправлена, id=', response.request_id);
         setIsSubmitted(true);
         setRequestId(response.request_id);
       } else {
-        console.error('❌ Неуспешная отправка:', response);
+        logger.errorSafe('❌ Неуспешная отправка', response);
         setError('Не удалось отправить заявку на ремонт. Пожалуйста, попробуйте еще раз.');
       }
     } catch (error) {
-      console.error('❌ Ошибка при отправке заявки на ремонт:', error);
+      logger.errorSafe('❌ Ошибка при отправке заявки на ремонт', error);
       setError(error.message || 'Произошла ошибка при отправке заявки. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону +79911857289.');
     } finally {
       setIsSubmitting(false);

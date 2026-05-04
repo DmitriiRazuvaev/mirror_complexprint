@@ -44,7 +44,7 @@ export default function HpRepair() {
           
           {/* Hero Image */}
           <header className="mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img 
+            <img loading="lazy" decoding="async" 
               src="/images/hp_master.jpg"
               alt="Мастер ComplexPrint ремонтирует принтер HP LaserJet с оригинальными запчастями"
               className="w-full h-[400px] object-cover"

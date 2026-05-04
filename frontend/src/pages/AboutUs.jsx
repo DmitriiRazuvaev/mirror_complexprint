@@ -47,7 +47,7 @@ export default function AboutUs() {
           
           {/* Hero Image Section */}
           <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl">
-            <img 
+            <img loading="lazy" decoding="async" 
               src="/images/HP_A3_master.jpg"
               alt="Профессиональный мастер ComplexPrint за работой"
               className="w-full h-[400px] object-cover"

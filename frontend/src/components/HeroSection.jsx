@@ -94,9 +94,13 @@ const HeroSection = () => {
           {/* Right Content - Equipment Image */}
           <div className="relative">
             <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-              <img 
+              <img
                 src="/images/hp.jpg"
                 alt="Профессиональное печатное оборудование"
+                fetchpriority="high"
+                decoding="async"
+                width="800"
+                height="600"
                 className="w-full h-auto rounded-2xl shadow-lg"
               />
               <div className="absolute -top-4 -right-4 bg-gradient-to-br from-pink-500 to-purple-600 text-white p-4 rounded-2xl shadow-lg">

@@ -151,7 +151,7 @@ export const repairProcessSteps = [
 export const submitRepairRequest = async (formData) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log("Заявка на ремонт отправлена:", formData);
+      // PII не логируем; формдата нужна только для имитации отправки
       resolve({
         success: true,
         message: "Ваша заявка на ремонт была успешно отправлена. Мы свяжемся с вами в течение 24 часов.",

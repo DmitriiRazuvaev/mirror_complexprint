@@ -44,7 +44,7 @@ export default function KyoceraRepair() {
 
           {/* Hero Image */}
           <header className="mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img 
+            <img loading="lazy" decoding="async" 
               src="/images/Kyocera_master.jpg"
               alt="Мастер ComplexPrint ремонтирует принтер Kyocera ECOSYS с оригинальными запчастями"
               className="w-full h-[400px] object-cover"

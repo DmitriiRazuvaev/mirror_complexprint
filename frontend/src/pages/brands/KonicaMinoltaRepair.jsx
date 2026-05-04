@@ -66,7 +66,7 @@ export default function KonicaMinoltaRepair() {
 
           {/* Hero Image */}
           <header className="mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img 
+            <img loading="lazy" decoding="async" 
               src="/images/bizhub_master.jpg"
               alt="Мастер ComplexPrint ремонтирует МФУ Konica Minolta bizhub с оригинальными запчастями"
               className="w-full h-[400px] object-cover"
