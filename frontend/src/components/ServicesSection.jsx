@@ -37,6 +37,8 @@ const ServicesSection = () => {
       id: 2,
       title: "Разовый ремонт",
       description: "Профессиональная услуга ремонта для решения немедленных проблем с оборудованием с гарантийным покрытием.",
+      learnMoreUrl: "/razovyy-remont",
+      learnMoreText: "Подробнее о разовом ремонте",
       price: "От 3000₽/выезд",
       popular: false,
       features: [

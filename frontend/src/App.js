@@ -25,6 +25,7 @@ import Pricing from "./pages/Pricing";
 import Districts from "./pages/Districts";
 import AboutUs from "./pages/AboutUs";
 import SubscriptionService from "./pages/SubscriptionService";
+import OneTimeRepair from "./pages/OneTimeRepair";
 import ScrollToTop from "./components/ScrollToTop";
 import FAQ from "./pages/FAQ";
 import CookieConsent from "./components/CookieConsent";
@@ -108,6 +109,7 @@ function App() {
           <Route path="/rayony-moskvy" element={<Districts />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/abonentskoe-obsluzhivanie" element={<SubscriptionService />} />
+          <Route path="/razovyy-remont" element={<OneTimeRepair />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/reviews" element={<Reviews />} />
