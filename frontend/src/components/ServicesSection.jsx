@@ -1,5 +1,6 @@
 import React from 'react';
-import { Check, Clock, Shield, Wrench, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Check, Clock, Shield, Wrench, Star, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -17,6 +18,8 @@ const ServicesSection = () => {
       id: 1,
       title: "Комплексное абонентское обслуживание",
       description: "Экономьте до 40–60%. Ежемесячное или ежеквартальное профилактическое обслуживание, обеспечивающее долгосрочную работу вашего офисного оборудования.",
+      learnMoreUrl: "/abonentskoe-obsluzhivanie",
+      learnMoreText: "Подробнее об абонентском обслуживании",
       price: "От 1500₽/месяц",
       popular: true,
       features: [
@@ -105,6 +108,15 @@ const ServicesSection = () => {
                   </div>
                   <CardTitle className="text-2xl text-gray-900">{service.title}</CardTitle>
                   <CardDescription className="text-gray-600 text-lg">{service.description}</CardDescription>
+                  {service.learnMoreUrl && (
+                    <Link
+                      to={service.learnMoreUrl}
+                      className="inline-flex items-center gap-1 mt-2 text-pink-600 hover:text-purple-700 font-semibold transition-colors group/link"
+                    >
+                      <span className="underline underline-offset-2">{service.learnMoreText}</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                    </Link>
+                  )}
                   <div className="text-3xl font-bold text-gray-900 mt-2">{service.price}</div>
                 </CardHeader>
                 
