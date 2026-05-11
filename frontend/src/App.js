@@ -4,14 +4,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import ServicesSection from "./components/ServicesSection";
-import EquipmentSection from "./components/EquipmentSection";
-import AboutSection from "./components/AboutSection";
-import RepairRequestForm from "./components/RepairRequestForm";
-import Footer from "./components/Footer";
 import { Toaster } from "./components/ui/toaster";
 import { Helmet } from "react-helmet-async";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
+import LazyLoad from "./components/LazyLoad";
 import {
   getOrganizationSchema,
   getWebSiteSchema,
@@ -22,6 +19,13 @@ import {
   getWPHeaderSchema,
   getWPFooterSchema,
 } from "./utils/schemas";
+
+// ── Below-the-fold компоненты главной — грузим только при скролле к ним ─────
+// Это уменьшает initial JS-bundle и TBT.
+const EquipmentSection = lazy(() => import("./components/EquipmentSection"));
+const AboutSection = lazy(() => import("./components/AboutSection"));
+const RepairRequestForm = lazy(() => import("./components/RepairRequestForm"));
+const Footer = lazy(() => import("./components/Footer"));
 
 // ── Lazy-loading всех роутов ────────────────────────────────────────────────
 // Каждая страница теперь грузится отдельным чанком только при переходе на неё.
@@ -57,6 +61,11 @@ const RouteLoader = () => (
   </div>
 );
 
+// Резервная высота для скрытых секций — чтобы избежать сдвига макета (CLS)
+const SectionPlaceholder = ({ height = "400px" }) => (
+  <div style={{ minHeight: height }} aria-hidden="true" />
+);
+
 const Home = () => {
   // Все JSON-LD склеены в один <script> вместо 8 отдельных —
   // меньше парсинга и меньше head-блокировки рендера.
@@ -85,13 +94,24 @@ const Home = () => {
       </Helmet>
       <Header />
       <main>
+        {/* Первый экран — рендерим синхронно (важно для LCP) */}
         <HeroSection />
         <ServicesSection />
-        <EquipmentSection />
-        <AboutSection />
-        <RepairRequestForm />
+
+        {/* Ниже первого экрана — грузим только при приближении к viewport */}
+        <LazyLoad placeholder={<SectionPlaceholder height="500px" />} minHeight="500px">
+          <EquipmentSection />
+        </LazyLoad>
+        <LazyLoad placeholder={<SectionPlaceholder height="400px" />} minHeight="400px">
+          <AboutSection />
+        </LazyLoad>
+        <LazyLoad placeholder={<SectionPlaceholder height="600px" />} minHeight="600px">
+          <RepairRequestForm />
+        </LazyLoad>
       </main>
-      <Footer />
+      <LazyLoad placeholder={<SectionPlaceholder height="300px" />} minHeight="300px">
+        <Footer />
+      </LazyLoad>
     </div>
   );
 };
