@@ -23,8 +23,22 @@ export default function KyoceraRepair() {
           content="Профессиональный ремонт и обслуживание принтеров Kyocera в Москве и МО. Быстрая диагностика, выезд мастера, оригинальные детали, гарантия 6 месяцев."
         />
         <link rel="canonical" href="https://complexprint.ru/remont-printerov-kyocera" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Комплекс Принт" />
+        <meta property="og:locale" content="ru_RU" />
         <meta property="og:title" content="Ремонт принтеров Kyocera в Москве | ComplexPrint" />
+        <meta property="og:description" content="Профессиональный ремонт принтеров и МФУ Kyocera (ECOSYS, TASKalfa) в Москве и МО. Замена девелопера, барабана, термоплёнки. Гарантия 6 месяцев. ☎ +7 (991) 185-72-89" />
         <meta property="og:url" content="https://complexprint.ru/remont-printerov-kyocera" />
+        <meta property="og:image" content="https://complexprint.ru/og-kyocera.jpg?v=2" />
+        <meta property="og:image:secure_url" content="https://complexprint.ru/og-kyocera.jpg?v=2" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Ремонт принтеров Kyocera в Москве — ComplexPrint" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ремонт принтеров Kyocera в Москве | ComplexPrint" />
+        <meta name="twitter:description" content="Ремонт Kyocera ECOSYS, TASKalfa. Выезд по Москве и МО, гарантия 6 месяцев." />
+        <meta name="twitter:image" content="https://complexprint.ru/og-kyocera.jpg?v=2" />
         <meta name="robots" content="index, follow" />
         <link rel="alternate" hrefLang="ru" href="https://complexprint.ru/remont-printerov-kyocera" />
         <script type="application/ld+json">

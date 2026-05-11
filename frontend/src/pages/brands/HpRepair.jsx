@@ -23,8 +23,22 @@ export default function HpRepair() {
           content="Профессиональный ремонт и обслуживание лазерных принтеров HP в Москве и МО. Быстрая диагностика, выезд в день обращения, оригинальные детали, гарантия 6 месяцев."
         />
         <link rel="canonical" href="https://complexprint.ru/remont-printerov-hp" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Комплекс Принт" />
+        <meta property="og:locale" content="ru_RU" />
         <meta property="og:title" content="Ремонт принтеров HP в Москве | ComplexPrint" />
+        <meta property="og:description" content="Профессиональный ремонт лазерных принтеров и МФУ HP (LaserJet, OfficeJet, DesignJet) в Москве и МО. Выезд в день обращения, оригинальные запчасти, гарантия 6 месяцев. ☎ +7 (991) 185-72-89" />
         <meta property="og:url" content="https://complexprint.ru/remont-printerov-hp" />
+        <meta property="og:image" content="https://complexprint.ru/og-hp.jpg?v=2" />
+        <meta property="og:image:secure_url" content="https://complexprint.ru/og-hp.jpg?v=2" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Ремонт принтеров HP в Москве — ComplexPrint" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ремонт принтеров HP в Москве | ComplexPrint" />
+        <meta name="twitter:description" content="Профессиональный ремонт HP LaserJet, OfficeJet, DesignJet. Выезд по Москве и МО, гарантия 6 месяцев." />
+        <meta name="twitter:image" content="https://complexprint.ru/og-hp.jpg?v=2" />
         <meta name="robots" content="index, follow" />
         <link rel="alternate" hrefLang="ru" href="https://complexprint.ru/remont-printerov-hp" />
         <script type="application/ld+json">

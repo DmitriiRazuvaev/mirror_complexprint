@@ -45,8 +45,22 @@ export default function KonicaMinoltaRepair() {
           content="Ремонт и обслуживание принтеров и МФУ Konica Minolta в Москве и МО. Быстрая диагностика, выезд мастера, оригинальные детали, гарантия 6 месяцев."
         />
         <link rel="canonical" href="https://complexprint.ru/remont-printerov-konica-minolta" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Комплекс Принт" />
+        <meta property="og:locale" content="ru_RU" />
         <meta property="og:title" content="Ремонт принтеров Konica Minolta в Москве | ComplexPrint" />
+        <meta property="og:description" content="Профессиональный ремонт МФУ и принтеров Konica Minolta bizhub в Москве и МО. Цветные и монохромные модели. Гарантия 6 месяцев. ☎ +7 (991) 185-72-89" />
         <meta property="og:url" content="https://complexprint.ru/remont-printerov-konica-minolta" />
+        <meta property="og:image" content="https://complexprint.ru/og-konica-minolta.jpg?v=2" />
+        <meta property="og:image:secure_url" content="https://complexprint.ru/og-konica-minolta.jpg?v=2" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Ремонт принтеров Konica Minolta в Москве — ComplexPrint" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Ремонт принтеров Konica Minolta в Москве | ComplexPrint" />
+        <meta name="twitter:description" content="Ремонт Konica Minolta bizhub. Выезд по Москве и МО, гарантия 6 месяцев." />
+        <meta name="twitter:image" content="https://complexprint.ru/og-konica-minolta.jpg?v=2" />
         <meta name="robots" content="index, follow" />
         <link rel="alternate" hrefLang="ru" href="https://complexprint.ru/remont-printerov-konica-minolta" />
         <script type="application/ld+json">
