@@ -3,6 +3,7 @@ import { Badge } from './ui/badge';
 import { Card, CardContent } from './ui/card';
 import { printerImages, supportedBrands, equipmentTypes } from '../data/mock';
 import { useNavigate } from 'react-router-dom';
+import { Wrench, ZapOff, ImageOff, FileWarning, Flame, Layers, Sparkles } from 'lucide-react';
 
 const EquipmentSection = () => {
   const navigate = useNavigate();
@@ -40,37 +41,45 @@ const EquipmentSection = () => {
           </p>
           
           {/* Срочный ремонт - частые поломки */}
-          <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 text-center">
-              🔧 Срочный ремонт самых частых поломок
-            </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-gray-700">
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Не включается / не видит картридж</span>
+          {(() => {
+            // Список частых поломок с иконками. Вынесен в массив, чтобы:
+            //  - сетка из 6 карточек рисовалась одинаковым кодом без копипасты
+            //  - все карточки получили одинаковую высоту и ровные отступы
+            //  - легко добавить/убрать пункт без переделки JSX
+            const commonIssues = [
+              { icon: ZapOff,       text: 'Не включается / не видит картридж' },
+              { icon: ImageOff,     text: 'Полосы, пятна, бледная печать' },
+              { icon: FileWarning,  text: 'Замятие бумаги, проблемы с подачей' },
+              { icon: Flame,        text: 'Ошибки термоузла / печки' },
+              { icon: Layers,       text: 'Не работает дуплекс, сканер' },
+              { icon: Sparkles,     text: 'Проблемы с проявкой, лазером' },
+            ];
+            return (
+              <div className="bg-gradient-to-br from-pink-50 via-white to-purple-50 rounded-2xl p-6 sm:p-8 mb-8 max-w-5xl mx-auto border border-pink-100/60 shadow-sm">
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <Wrench className="w-6 h-6 text-pink-500" strokeWidth={2.2} />
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center">
+                    Срочный ремонт самых частых поломок
+                  </h3>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {commonIssues.map(({ icon: Icon, text }, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 border border-gray-100"
+                    >
+                      <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
+                        <Icon className="w-4.5 h-4.5 text-white" strokeWidth={2.2} size={18} />
+                      </span>
+                      <span className="text-sm sm:text-[15px] font-medium text-gray-800 leading-snug">
+                        {text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Полосы, пятна, бледная печать</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Замятие бумаги, проблемы с подачей</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Ошибки термоузла / печки</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Не работает дуплекс, сканер</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-pink-500">•</span>
-                <span>Проблемы с проявкой, лазером</span>
-              </div>
-            </div>
-          </div>
+            );
+          })()}
           
           {/* Кнопка выбора принтера */}
           <div className="text-center">
