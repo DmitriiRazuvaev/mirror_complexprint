@@ -558,23 +558,65 @@
             </div>
         </a>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const helpButton = document.getElementById('help-button');
-                if (helpButton) {
-                    helpButton.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        if (window.location.pathname !== '/') {
-                            window.location.href = '/#repair-request';
-                            return;
-                        }
-                        setTimeout(() => {
-                            const repairSection = document.getElementById('repair-request');
-                            if (repairSection) {
-                                repairSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        }, 100);
-                    });
-                }
+            // ============================================================
+            // Утилита для скролла к секции, которая может быть lazy-loaded
+            // через IntersectionObserver (RepairRequestForm, Footer и т.д.).
+            //
+            // Алгоритм:
+            //   1. Если элемент уже в DOM — просто scrollIntoView.
+            //   2. Если нет — программно скроллим страницу вниз. Это
+            //      тригернет IntersectionObserver в <LazyLoad>, и React
+            //      смонтирует секцию.
+            //   3. Поллингом каждые 50мс (макс 3 сек) ждём появления
+            //      элемента и тогда плавно скроллим к нему.
+            //
+            // Экспортируем в window — React-компоненты тоже могут
+            // использовать (см. Header, Home).
+            // ============================================================
+            window.scrollToLazySection = function (sectionId) {
+                if (!sectionId) return;
+
+                var tryScroll = function () {
+                    var el = document.getElementById(sectionId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        return true;
+                    }
+                    return false;
+                };
+
+                if (tryScroll()) return;
+
+                // Принудительно мотаем страницу до конца, чтобы lazy-секция
+                // попала в зону наблюдения IntersectionObserver и React её смонтировал.
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+                var tries = 0;
+                var maxTries = 60; // 60 * 50мс = 3 секунды
+                var poller = setInterval(function () {
+                    tries++;
+                    if (tryScroll() || tries >= maxTries) {
+                        clearInterval(poller);
+                    }
+                }, 50);
+            };
+
+            // Кнопка "Получить помощь" в правом нижнем углу.
+            // Если мы не на главной — переходим на главную и используем
+            // sessionStorage маркер, который подхватит Home-компонент
+            // и выполнит тот же scrollToLazySection после загрузки React.
+            document.addEventListener('DOMContentLoaded', function () {
+                var helpButton = document.getElementById('help-button');
+                if (!helpButton) return;
+                helpButton.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (window.location.pathname !== '/') {
+                        try { sessionStorage.setItem('cp_scroll_to', 'repair-request'); } catch (err) {}
+                        window.location.href = '/';
+                        return;
+                    }
+                    window.scrollToLazySection('repair-request');
+                });
             });
         </script>
         <!-- ============================================= -->

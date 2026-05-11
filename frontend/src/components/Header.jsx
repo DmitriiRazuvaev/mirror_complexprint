@@ -41,21 +41,32 @@ const Header = () => {
       setIsMenuOpen(false);
       return;
     }
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
+    // Используем глобальный helper из index.html — он умеет ждать,
+    // пока lazy-loaded секция (например, форма заявки) появится в DOM,
+    // и потом плавно к ней скроллит. Если helper по какой-то причине
+    // не успел загрузиться — fallback на простой scrollIntoView.
+    if (typeof window.scrollToLazySection === 'function') {
+      window.scrollToLazySection(sectionId);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsMenuOpen(false);
   };
   
   useEffect(() => {
     if (location.state?.scrollTo && location.pathname === '/') {
-      const element = document.getElementById(location.state.scrollTo);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      const sectionId = location.state.scrollTo;
+      // Даём React время отрисовать первый экран, потом запускаем
+      // умный скролл с поддержкой lazy-секций.
+      setTimeout(() => {
+        if (typeof window.scrollToLazySection === 'function') {
+          window.scrollToLazySection(sectionId);
+        } else {
+          const el = document.getElementById(sectionId);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
       window.history.replaceState({}, document.title);
     }
   }, [location]);

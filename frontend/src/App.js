@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect, useRef } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
@@ -67,6 +67,36 @@ const SectionPlaceholder = ({ height = "400px" }) => (
 );
 
 const Home = () => {
+  // Защита от double-invoke в React.StrictMode (dev-режим):
+  // useEffect выполняется ДВАЖДЫ, и второй раз sessionStorage уже пустой.
+  // Этот ref гарантирует, что обработка скролла случится только один раз.
+  const scrollHandledRef = useRef(false);
+
+  // Когда юзер пришёл с другой страницы по кнопке "Получить помощь"
+  // или из навигации Header → мы оставили маркер в sessionStorage.
+  // Здесь его читаем и вызываем умный скролл к lazy-секции.
+  useEffect(() => {
+    if (scrollHandledRef.current) return;
+    scrollHandledRef.current = true;
+
+    let target = null;
+    try {
+      target = sessionStorage.getItem('cp_scroll_to');
+      if (target) sessionStorage.removeItem('cp_scroll_to');
+    } catch (e) { /* sessionStorage недоступен — игнорируем */ }
+
+    // Также поддерживаем hash-навигацию вида /#repair-request
+    if (!target && typeof window !== 'undefined' && window.location.hash) {
+      target = window.location.hash.replace('#', '');
+    }
+
+    if (target && typeof window.scrollToLazySection === 'function') {
+      // НЕ возвращаем cleanup — иначе в StrictMode setTimeout отменится.
+      // Небольшая задержка, чтобы React успел отрендерить плейсхолдеры lazy-секций.
+      setTimeout(() => window.scrollToLazySection(target), 150);
+    }
+  }, []);
+
   // Все JSON-LD склеены в один <script> вместо 8 отдельных —
   // меньше парсинга и меньше head-блокировки рендера.
   const homeJsonLd = [
