@@ -2,7 +2,7 @@ import React from 'react';
 import { Award, Users, Clock, CheckCircle } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { Card, CardContent } from './ui/card';
-import { clientCompanies, repairProcessSteps } from '../data/mock';
+import { repairProcessSteps } from '../data/mock';
 
 const AboutSection = () => {
   const stats = [
@@ -54,21 +54,6 @@ const AboutSection = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Client Companies */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Нам доверяют крупные компании</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {clientCompanies.map((company, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-pink-600 font-bold text-lg">{company.charAt(0)}</span>
-                </div>
-                <p className="font-semibold text-gray-900 text-sm">{company}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Repair Process */}

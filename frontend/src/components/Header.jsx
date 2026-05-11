@@ -91,6 +91,70 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+              {/* Выпадающее меню "О нас" */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center space-x-1 font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 focus:outline-none whitespace-nowrap">
+                  <span>О нас</span>
+                  <ChevronDown size={16} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white shadow-lg">
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/about-us')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    О нас
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/reviews')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    Отзывы о нас
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => window.open('https://dzen.ru/complexprint', '_blank', 'noopener')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    Наш блог на Дзен
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Выпадающее меню "Справочники" */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center space-x-1 font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 focus:outline-none whitespace-nowrap">
+                  <span>Справочники</span>
+                  <ChevronDown size={16} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white shadow-lg">
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/ceny')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    Цены
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/faq')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    FAQ
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/print-defects-guide')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    Справочник дефектов
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => goToPage('/printer-error-guide')}
+                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
+                  >
+                    Гид по Ошибкам
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <button onClick={() => scrollToSection('equipment')} className="font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 whitespace-nowrap">Оборудование</button>
+
               {/* Выпадающее меню "Услуги" */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center space-x-1 font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 focus:outline-none whitespace-nowrap">
@@ -136,72 +200,7 @@ const Header = () => {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
-              <button onClick={() => scrollToSection('equipment')} className="font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 whitespace-nowrap">Оборудование</button>
-              
-              {/* Выпадающее меню "О нас" */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center space-x-1 font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 focus:outline-none whitespace-nowrap">
-                  <span>О нас</span>
-                  <ChevronDown size={16} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white shadow-lg">
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/about-us')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    О нас
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/reviews')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    Отзывы о нас
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => window.open('https://dzen.ru/complexprint', '_blank', 'noopener')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    Наш блог на Дзен
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              {/* Выпадающее меню "Справочники" */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center space-x-1 font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 focus:outline-none whitespace-nowrap">
-                  <span>Справочники</span>
-                  <ChevronDown size={16} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white shadow-lg">
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/ceny')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    Цены
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/faq')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    FAQ
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/print-defects-guide')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    Справочник дефектов
-                  </DropdownMenuItem>
-                  {/* НОВЫЙ ПУНКТ */}
-                  <DropdownMenuItem 
-                    onClick={() => goToPage('/printer-error-guide')}
-                    className="cursor-pointer font-montserrat font-semibold text-purple-900 hover:bg-pink-50 hover:text-pink-600"
-                  >
-                    Гид по Ошибкам
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
+
               {/* Контакты ведет на страницу контактов */}
               <button onClick={() => goToPage('/contacts')} className="font-montserrat font-bold text-purple-900 hover:text-pink-600 transition-colors duration-200 whitespace-nowrap">Контакты</button>
             </nav>
@@ -239,6 +238,21 @@ const Header = () => {
           {/* Меню */}
           <div className="absolute top-16 bottom-0 left-0 right-0 bg-white overflow-y-auto">
             <nav className="flex flex-col py-2 pb-8">
+              {/* Группа "О нас" в мобильном меню */}
+              <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">О нас</div>
+              <button onClick={() => goToPage('/about-us')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">О нас</button>
+              <button onClick={() => goToPage('/reviews')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Отзывы о нас</button>
+              <button onClick={() => { window.open('https://dzen.ru/complexprint', '_blank', 'noopener'); setIsMenuOpen(false); }} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Наш блог на Дзен</button>
+
+              {/* Группа "Справочники" в мобильном меню */}
+              <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Справочники</div>
+              <button onClick={() => goToPage('/ceny')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Цены</button>
+              <button onClick={() => goToPage('/faq')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">FAQ</button>
+              <button onClick={() => goToPage('/print-defects-guide')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Справочник дефектов</button>
+              <button onClick={() => goToPage('/printer-error-guide')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Гид по Ошибкам</button>
+
+              <button onClick={() => scrollToSection('equipment')} className="px-4 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Оборудование</button>
+
               {/* Группа "Услуги" в мобильном меню */}
               <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Услуги</div>
               <button onClick={() => goToPage('/remont-printerov-xerox')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Ремонт Xerox</button>
@@ -246,23 +260,7 @@ const Header = () => {
               <button onClick={() => goToPage('/remont-printerov-canon')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Ремонт Canon</button>
               <button onClick={() => goToPage('/remont-printerov-konica-minolta')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Ремонт Konica Minolta</button>
               <button onClick={() => goToPage('/remont-printerov-kyocera')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Ремонт Kyocera</button>
-              
-              <button onClick={() => scrollToSection('equipment')} className="px-4 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Оборудование</button>
-              
-              {/* Группа "О нас" в мобильном меню */}
-              <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">О нас</div>
-              <button onClick={() => goToPage('/about-us')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">О нас</button>
-              <button onClick={() => goToPage('/reviews')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Отзывы о нас</button>
-              <button onClick={() => { window.open('https://dzen.ru/complexprint', '_blank', 'noopener'); setIsMenuOpen(false); }} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Наш блог на Дзен</button>
-              
-              {/* Группа "Справочники" в мобильном меню */}
-              <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Справочники</div>
-              <button onClick={() => goToPage('/ceny')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Цены</button>
-              <button onClick={() => goToPage('/faq')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">FAQ</button>
-              <button onClick={() => goToPage('/print-defects-guide')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Справочник дефектов</button>
-              {/* НОВЫЙ ПУНКТ В МОБИЛЬНОМ МЕНЮ */}
-              <button onClick={() => goToPage('/printer-error-guide')} className="px-6 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Гид по Ошибкам</button>
-              
+
               <button onClick={() => goToPage('/contacts')} className="px-4 py-3 text-left font-montserrat font-bold text-purple-900 hover:bg-pink-50 hover:text-pink-600 transition-colors duration-200">Контакты</button>
               <div className="px-4 py-3 border-t">
                 <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
