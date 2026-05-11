@@ -120,14 +120,45 @@ const EquipmentSection = () => {
         <div className="mb-16">
           <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Поддерживаемые бренды</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {supportedBrands.map((brand, index) => (
-              <div key={index} className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <span className="text-white font-bold text-lg">{brand.charAt(0)}</span>
+            {supportedBrands.map((brand, index) => {
+              // Маппинг названия → файл логотипа.
+              // Лёгкие SVG (~0.3-1 КБ каждый), грузятся параллельно браузером,
+              // имеют loading="lazy" т.к. эта секция ниже первого экрана.
+              const logoMap = {
+                'Hewlett Packard (HP)': '/images/brands/hp.svg',
+                'Canon': '/images/brands/canon.svg',
+                'Kyocera': '/images/brands/kyocera.svg',
+                'Konica Minolta': '/images/brands/konica-minolta.svg',
+                'Xerox': '/images/brands/xerox.svg',
+                'Ricoh': '/images/brands/ricoh.svg',
+              };
+              const logoSrc = logoMap[brand];
+              return (
+                <div
+                  key={index}
+                  className="bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 text-center shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col items-center justify-center"
+                >
+                  <div className="w-full h-16 flex items-center justify-center mb-3">
+                    {logoSrc ? (
+                      <img
+                        src={logoSrc}
+                        alt={`Логотип ${brand}`}
+                        loading="lazy"
+                        decoding="async"
+                        width="160"
+                        height="64"
+                        className="max-h-14 w-auto object-contain"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">{brand.charAt(0)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <p className="font-semibold text-gray-900 text-sm">{brand}</p>
                 </div>
-                <p className="font-semibold text-gray-900 text-sm">{brand}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
