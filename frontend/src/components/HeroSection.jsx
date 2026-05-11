@@ -94,15 +94,32 @@ const HeroSection = () => {
           {/* Right Content - Equipment Image */}
           <div className="relative">
             <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-              <img
-                src="/images/hp.jpg"
-                alt="Профессиональное печатное оборудование"
-                fetchpriority="high"
-                decoding="async"
-                width="800"
-                height="600"
-                className="w-full h-auto rounded-2xl shadow-lg"
-              />
+              {/*
+                LCP-изображение. Используем <picture>:
+                  - WebP (≈40 KB на мобиле / 75 KB на десктопе) — основной формат
+                  - JPG  — fallback для старых браузеров
+                  - srcset 800/1200 + sizes — браузер сам выбирает нужный
+                  - fetchpriority="high" + eager loading — для лучшего LCP
+              */}
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet="/images/hp-800.webp 800w, /images/hp-1200.webp 1200w"
+                  sizes="(max-width: 768px) 90vw, (max-width: 1280px) 50vw, 600px"
+                />
+                <img
+                  src="/images/hp-1200.jpg"
+                  srcSet="/images/hp-800.jpg 800w, /images/hp-1200.jpg 1200w"
+                  sizes="(max-width: 768px) 90vw, (max-width: 1280px) 50vw, 600px"
+                  alt="Профессиональное печатное оборудование"
+                  fetchpriority="high"
+                  decoding="async"
+                  loading="eager"
+                  width="1200"
+                  height="956"
+                  className="w-full h-auto rounded-2xl shadow-lg"
+                />
+              </picture>
               <div className="absolute -top-4 -right-4 bg-gradient-to-br from-pink-500 to-purple-600 text-white p-4 rounded-2xl shadow-lg">
                 <div className="text-center">
                   <div className="text-2xl font-bold">24/7</div>

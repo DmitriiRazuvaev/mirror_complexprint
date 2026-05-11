@@ -41,6 +41,22 @@
         <link rel="dns-prefetch" href="https://us.i.posthog.com">
 
         <!-- ============================================= -->
+        <!-- Preload LCP-картинки главного экрана.                            -->
+        <!-- Это даёт браузеру понять, что эту картинку надо качать ПАРАЛЛЕЛЬНО -->
+        <!-- с парсингом HTML, а не ждать момента когда React её отрендерит.  -->
+        <!-- imagesrcset + imagesizes должны совпадать с <picture> в HeroSection.-->
+        <!-- ============================================= -->
+        <link
+            rel="preload"
+            as="image"
+            href="/images/hp-1200.webp"
+            type="image/webp"
+            imagesrcset="/images/hp-800.webp 800w, /images/hp-1200.webp 1200w"
+            imagesizes="(max-width: 768px) 90vw, (max-width: 1280px) 50vw, 600px"
+            fetchpriority="high"
+        >
+
+        <!-- ============================================= -->
         <!-- Google tag (gtag.js) — загружается отложенно   -->
         <!-- Инициализация в конце body                     -->
         <!-- ============================================= -->
@@ -378,10 +394,29 @@
         <!-- ВКонтакте (специфические теги) -->
         <meta name="vk:image" content="https://complexprint.ru/og-image.jpg?v=2" />
         
-        <!-- Google Fonts - Montserrat для навигации -->
+        <!-- ============================================= -->
+        <!-- Google Fonts - Montserrat (non-blocking)                       -->
+        <!-- Техника: грузим как media="print", а onload переключаем на     -->
+        <!-- 'all'. Браузер не блокирует рендер на скачивании шрифта.       -->
+        <!-- Системный шрифт (Tailwind sans-serif fallback) показывается    -->
+        <!-- мгновенно, Montserrat подхватывается ~через 100-300мс без FOIT.-->
+        <!-- ============================================= -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+        <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap"
+        >
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap"
+            media="print"
+            onload="this.media='all'"
+        >
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap">
+        </noscript>
         
         <title>Комплекс Принт - Ремонт и обслуживание принтеров в Москве</title>
     </head>
