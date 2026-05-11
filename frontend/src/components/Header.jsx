@@ -35,6 +35,15 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
+  // Fallback-скролл с учётом фиксированного хедера.
+  // Используется только если global helper не загрузился.
+  const scrollWithHeaderOffset = (el) => {
+    const headerEl = document.querySelector('header');
+    const offset = (headerEl?.offsetHeight || 80) + 16;
+    const y = window.pageYOffset + el.getBoundingClientRect().top - offset;
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+  };
+
   const scrollToSection = (sectionId) => {
     if (location.pathname !== '/') {
       navigate('/', { state: { scrollTo: sectionId } });
@@ -43,13 +52,12 @@ const Header = () => {
     }
     // Используем глобальный helper из index.html — он умеет ждать,
     // пока lazy-loaded секция (например, форма заявки) появится в DOM,
-    // и потом плавно к ней скроллит. Если helper по какой-то причине
-    // не успел загрузиться — fallback на простой scrollIntoView.
+    // плюс учитывает высоту фиксированного хедера при скролле.
     if (typeof window.scrollToLazySection === 'function') {
       window.scrollToLazySection(sectionId);
     } else {
       const element = document.getElementById(sectionId);
-      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      if (element) scrollWithHeaderOffset(element);
     }
     setIsMenuOpen(false);
   };
@@ -57,14 +65,12 @@ const Header = () => {
   useEffect(() => {
     if (location.state?.scrollTo && location.pathname === '/') {
       const sectionId = location.state.scrollTo;
-      // Даём React время отрисовать первый экран, потом запускаем
-      // умный скролл с поддержкой lazy-секций.
       setTimeout(() => {
         if (typeof window.scrollToLazySection === 'function') {
           window.scrollToLazySection(sectionId);
         } else {
           const el = document.getElementById(sectionId);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          if (el) scrollWithHeaderOffset(el);
         }
       }, 100);
       window.history.replaceState({}, document.title);

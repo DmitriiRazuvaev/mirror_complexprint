@@ -576,10 +576,24 @@
             window.scrollToLazySection = function (sectionId) {
                 if (!sectionId) return;
 
+                // Высота фиксированного хедера, чтобы при скролле верх секции
+                // не "уезжал" под него. Считаем динамически — если header
+                // не найден, используем безопасный fallback 96px (h-20 + запас).
+                var getHeaderOffset = function () {
+                    var h = document.querySelector('header');
+                    return (h && h.offsetHeight ? h.offsetHeight : 0) + 16; // +16px воздуха
+                };
+
+                var smoothScrollTo = function (el) {
+                    var rect = el.getBoundingClientRect();
+                    var y = window.pageYOffset + rect.top - getHeaderOffset();
+                    window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+                };
+
                 var tryScroll = function () {
                     var el = document.getElementById(sectionId);
                     if (el) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        smoothScrollTo(el);
                         return true;
                     }
                     return false;
